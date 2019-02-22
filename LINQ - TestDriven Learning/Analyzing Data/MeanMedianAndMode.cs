@@ -1,10 +1,9 @@
 ﻿using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Models;
+using Xunit;
 
 namespace Analyzing_Data
 {
-    [TestClass]
     public class MeanMedianAndMode
     {
 
@@ -15,7 +14,7 @@ namespace Analyzing_Data
         - Mode: Number that occurs the largest number of times
         */
 
-        [TestMethod]
+        [Fact]
         public void CalculateMeanUsingAverage()
         {
             /* Mean (using Average)*/
@@ -24,10 +23,10 @@ namespace Analyzing_Data
             */
             var meanRating = ProgrammingLanguageRepository.GetProgrammingLanguages().Average(pg => pg.Rating);
 
-            Assert.AreEqual(meanRating, 7.25);
+            Assert.Equal(7.25, meanRating);
         }
 
-        [TestMethod]
+        [Fact]
         public void CalculateMedianUsingOrderBy()
         {
             /* Median (using GroupBy) */
@@ -52,11 +51,11 @@ namespace Analyzing_Data
                 medianRating = sortedProgrtammingLanguges.ElementAt(position).Rating;
             }
 
-            Assert.AreEqual(medianRating, 7);
+            Assert.Equal(7, medianRating);
         }
 
 
-        [TestMethod]
+        [Fact]
         public void CalculateMode()
         {
             /* Mode (using GroupBy and OrderByDescending) */
@@ -66,7 +65,7 @@ namespace Analyzing_Data
             var modeRating = ProgrammingLanguageRepository.GetProgrammingLanguages().GroupBy
                 (pg => pg.Rating).OrderByDescending(group => group.Count()).Select(group => group.Key).FirstOrDefault();
 
-            Assert.AreEqual(modeRating, 7);
+            Assert.Equal(7, modeRating);
         }
     }
 }

@@ -1,14 +1,12 @@
 ﻿using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Models;
+using Xunit;
 
 namespace Analyzing_Data
 {
-    [TestClass]
     public class Totaling
     {
-  
-        [TestMethod]
+        [Fact]
         public void CalculateTotalUsingSumOperator()
         {
             /* Sum Operator */
@@ -19,8 +17,8 @@ namespace Analyzing_Data
 
             // Getting the total 'Market Share' from all of the programming languages
             var totalMarketShare = ProgrammingLanguageRepository.GetProgrammingLanguages().Sum(pg => pg.MarketShare);
-              
-            Assert.AreEqual(totalMarketShare,100);
+
+            Assert.Equal(100, totalMarketShare);
         }
     }
 }

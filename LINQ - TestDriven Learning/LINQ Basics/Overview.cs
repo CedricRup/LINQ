@@ -1,13 +1,12 @@
 ﻿using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Models;
+using Xunit;
 
 namespace LINQ_Basics
 {
-    [TestClass]
     public class Overview
     {
-        [TestMethod]
+        [Fact]
         public void Introduction()
         {
             /* Language Integrated Query (LINQ)
@@ -43,7 +42,7 @@ namespace LINQ_Basics
 
             //LINQ makes a query a first-class language construct in C# ?
             const bool answer = true;
-            Assert.IsTrue(answer);
+            Assert.True(answer);
         }
 
         /* LINQ Syntax
@@ -59,7 +58,7 @@ namespace LINQ_Basics
         - Invokes the LINQ operators using methods
         */
 
-        [TestMethod]
+        [Fact]
         public void FindItemWithForeachIterator()
         {
             var programmingLanguages = ProgrammingLanguageRepository.GetProgrammingLanguages();
@@ -74,11 +73,11 @@ namespace LINQ_Basics
                     csharp = programmingLanguage;
                 }
             }
-            Assert.IsNotNull(csharp);
-            Assert.IsTrue(csharp.Name == "C#");
+            Assert.NotNull(csharp);
+            Assert.True(csharp.Name == "C#");
         }
 
-        [TestMethod]
+        [Fact]
         public void FindItemWithLinqQuerySyntax()
         {
             var programmingLanguages = ProgrammingLanguageRepository.GetProgrammingLanguages();
@@ -104,11 +103,11 @@ namespace LINQ_Basics
             - The LINQ query is not executed until its result is required
             - Calling an operator on the query will cause the query to execute, in this case, is the First() method
             */
-            Assert.IsNotNull(csharp);
-            Assert.IsTrue(csharp.Name == "C#");
+            Assert.NotNull(csharp);
+            Assert.True(csharp.Name == "C#");
         }
 
-        [TestMethod]
+        [Fact]
         public void FindItemWithLinqMethodSyntax()
         {
             var programmingLanguages = ProgrammingLanguageRepository.GetProgrammingLanguages();
@@ -135,11 +134,11 @@ namespace LINQ_Basics
             // when the condition is met, the Lamda fuction returns 'true' and 'First()' returns the object
             var csharp = programmingLanguages.First(programmingLanguage => programmingLanguage.Name == "C#");
 
-            Assert.IsNotNull(csharp);
-            Assert.IsTrue(csharp.Name == "C#");
+            Assert.NotNull(csharp);
+            Assert.True(csharp.Name == "C#");
         }
 
-        [TestMethod]
+        [Fact]
         public void FailToFindItemWithFirstOrDefault()
         {
             var programmingLanguages = ProgrammingLanguageRepository.GetProgrammingLanguages();
@@ -147,10 +146,10 @@ namespace LINQ_Basics
             // Finds the first entry on the list, but if no entry is found, it returns the default value of the list object, which in most reference Types is 'null'
             var cplusplus = programmingLanguages.FirstOrDefault(programmingLanguage => programmingLanguage.Name == "C++");
 
-            Assert.IsNull(cplusplus);
+            Assert.Null(cplusplus);
         }
 
-        [TestMethod]
+        [Fact]
         public void FindSeveralItemsWithLinqMethodSyntax()
         {
             var programmingLanguages = ProgrammingLanguageRepository.GetProgrammingLanguages();
@@ -163,10 +162,10 @@ namespace LINQ_Basics
                     // Otherwise, you will enumerate the collection every time you execute a LINQ statement on 'programmingLanguages'
                     programmingLanguage => programmingLanguage.Name == "C#" || programmingLanguage.Name == "Java").ToList();
 
-            Assert.AreEqual(foundLanguages.First().Name, "C#");
+            Assert.Equal("C#", foundLanguages.First().Name);
             // Chaining: Extension methods can be chained together
             // Skip() - allows to fluently(via chaining) skip one entry
-            Assert.AreEqual(foundLanguages.Skip(1).First().Name, "Java");
+            Assert.Equal("Java", foundLanguages.Skip(1).First().Name);
         }
     }
 }

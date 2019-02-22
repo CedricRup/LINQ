@@ -1,16 +1,14 @@
 ﻿using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Models;
+using Xunit;
 
 namespace LINQ_Examples
 {
-    [TestClass]
     public class Creating
     {
         /* Creating */
         // It can be achieved by using the IEnumerable static class methods: Range and Repeat
         // They are not extension methods and they do not run in a 'deferred execution' manner
-        [TestMethod]
+        [Fact]
         public void CreatingSequenceUsingRange()
         {
             /* Range */
@@ -20,7 +18,7 @@ namespace LINQ_Examples
             var currentNumber = 0;
             foreach (var integer in integers)
             {
-                Assert.AreEqual(integer, currentNumber);
+                Assert.Equal(integer, currentNumber);
                 currentNumber++;
             }
 
@@ -30,12 +28,12 @@ namespace LINQ_Examples
             var currentNumberSelect = 0;
             foreach (var integer in integersPlusOne)
             {
-                Assert.AreEqual(integer, currentNumberSelect);
+                Assert.Equal(integer, currentNumberSelect);
                 currentNumberSelect += 2;
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void CreatingSequenceUsingRepeat()
         {
             /* Repeat */
@@ -46,7 +44,7 @@ namespace LINQ_Examples
             const int repeatedNumber = 5;
             foreach (var integer in integers)
             {
-                Assert.AreEqual(integer, repeatedNumber);
+                Assert.Equal(integer, repeatedNumber);
             }
         }
     }

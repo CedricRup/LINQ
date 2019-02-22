@@ -1,10 +1,9 @@
 ﻿using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Models;
+using Xunit;
 
 namespace Analyzing_Data
 {
-    [TestClass]
     public class GroupingAndSumming
     {
         /* GroupBy 
@@ -14,7 +13,7 @@ namespace Analyzing_Data
         - Parent Property
        */
 
-        [TestMethod]
+        [Fact]
         public void GroupingBySingleProperty()
         {
             // GroupBy (Single Property)
@@ -30,11 +29,11 @@ namespace Analyzing_Data
                 Key = groupKey,
                 MarketShare = marketShareTotal.Sum()
             }).ToList();
-            Assert.AreEqual(marketShare.First().MarketShare, 70);  // Key = true
-            Assert.AreEqual(marketShare.Last().MarketShare, 30);   // Key = false
+            Assert.Equal(70, marketShare.First().MarketShare);  // Key = true
+            Assert.Equal(30, marketShare.Last().MarketShare);   // Key = false
         }
 
-        [TestMethod]
+        [Fact]
         public void GroupingByMultipleProperties()
         {
             // GroupBy (Multiple Properties)
@@ -58,12 +57,12 @@ namespace Analyzing_Data
                 }).ToList();
 
             // Three results (total):
-            Assert.AreEqual(marketShare.First().Key, "Derives From C :True , Name contains 'C' : True"); //  MarketShare = 39
-            Assert.AreEqual(marketShare[1].Key, "Derives From C :True , Name contains 'C' : False"); //  MarketShare = 31
-            Assert.AreEqual(marketShare.Last().Key, "Derives From C :False , Name contains 'C' : False");  //  MarketShare = 30
+            Assert.Equal("Derives From C :True , Name contains 'C' : True", marketShare.First().Key); //  MarketShare = 39
+            Assert.Equal("Derives From C :True , Name contains 'C' : False", marketShare[1].Key); //  MarketShare = 31
+            Assert.Equal("Derives From C :False , Name contains 'C' : False", marketShare.Last().Key);  //  MarketShare = 30
         }
 
-        [TestMethod]
+        [Fact]
         public void GroupingByParentData()
         {
             // GroupBy (Parent Property)
@@ -90,14 +89,14 @@ namespace Analyzing_Data
                 }).ToList();
 
             // Three results (total):
-            Assert.AreEqual(programmingLanguagesMarketShare.First().Key, "Object Oriented");
-            Assert.AreEqual(programmingLanguagesMarketShare.First().MarketShare, 77);
+            Assert.Equal("Object Oriented", programmingLanguagesMarketShare.First().Key);
+            Assert.Equal(77, programmingLanguagesMarketShare.First().MarketShare);
 
-            Assert.AreEqual(programmingLanguagesMarketShare[1].Key, "Imperative");
-            Assert.AreEqual(programmingLanguagesMarketShare[1].MarketShare, 4);
+            Assert.Equal("Imperative", programmingLanguagesMarketShare[1].Key);
+            Assert.Equal(4, programmingLanguagesMarketShare[1].MarketShare);
 
-            Assert.AreEqual(programmingLanguagesMarketShare.Last().Key, "Functional");
-            Assert.AreEqual(programmingLanguagesMarketShare.Last().MarketShare, 19);
+            Assert.Equal("Functional", programmingLanguagesMarketShare.Last().Key);
+            Assert.Equal(19, programmingLanguagesMarketShare.Last().MarketShare);
         }
     }
 }

@@ -1,16 +1,16 @@
 ﻿using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Models;
+using Xunit;
 
 namespace LINQ_Examples
 {
-    [TestClass]
+
     public class Sorting
     {
         /* Sorting */
         // LINQ Provides a set of ordering operators that allow you to order a sequence of objects by one or more criteria
         // The execution of a query expression using these operators is deferred until the code request an item from the resulting sequence
-        [TestMethod]
+        [Fact]
         public void OrderingByKeySelector()
         {
             var programmingLanguages = ProgrammingLanguageRepository.GetProgrammingLanguages();
@@ -19,11 +19,11 @@ namespace LINQ_Examples
             // The parameter for OrderBy is a KeySelector, which is the field to use as the key for the sorting
             var orderedProgrammingLanguages = programmingLanguages.OrderBy(programmingLanguage => programmingLanguage.Name);
 
-            Assert.IsTrue(orderedProgrammingLanguages.First().Name == "C");
-            Assert.IsTrue(orderedProgrammingLanguages.Last().Name == "Ruby");
+            Assert.True(orderedProgrammingLanguages.First().Name == "C");
+            Assert.True(orderedProgrammingLanguages.Last().Name == "Ruby");
         }
 
-        [TestMethod]
+        [Fact]
         public void OrderingUsingTwoConditions()
         {
             var programmingLanguages = ProgrammingLanguageRepository.GetProgrammingLanguages();
@@ -33,11 +33,11 @@ namespace LINQ_Examples
             var orderedProgrammingLanguages = programmingLanguages.OrderBy(programmingLanguage => programmingLanguage.Rating).ThenBy(programmingLanguage => programmingLanguage.Name);
             // Note: It is possible to create several filters by using chaining, as long as the first method is 'OrderBy' followed by a series of 'ThenBy'
 
-            Assert.IsTrue(orderedProgrammingLanguages.First().Name == "Java");
-            Assert.IsTrue(orderedProgrammingLanguages.Last().Name == "F#");
+            Assert.True(orderedProgrammingLanguages.First().Name == "Java");
+            Assert.True(orderedProgrammingLanguages.Last().Name == "F#");
         }
 
-        [TestMethod]
+        [Fact]
         public void SortingInReverseUsingOrderByDescending()
         {
             var programmingLanguages = ProgrammingLanguageRepository.GetProgrammingLanguages();
@@ -46,11 +46,11 @@ namespace LINQ_Examples
             // Allows to reverse a sequence of items by using a KeySelector
             var orderedProgrammingLanguages = programmingLanguages.OrderByDescending(programmingLanguage => programmingLanguage.Rating);
 
-            Assert.IsTrue(orderedProgrammingLanguages.First().Name == "C#");
-            Assert.IsTrue(orderedProgrammingLanguages.Last().Name == "Java");
+            Assert.True(orderedProgrammingLanguages.First().Name == "C#");
+            Assert.True(orderedProgrammingLanguages.Last().Name == "Java");
         }
 
-        [TestMethod]
+        [Fact]
         public void SortingInReverseUsingReverse()
         {
             var programmingLanguages = ProgrammingLanguageRepository.GetProgrammingLanguages();
@@ -60,11 +60,11 @@ namespace LINQ_Examples
             var orderedProgrammingLanguages = programmingLanguages.OrderBy(programmingLanguage => programmingLanguage.Rating).Reverse().ToList();
 
             // Reverse sets 'F#' as the first value since it has a rating of 10, same as C#
-            Assert.IsTrue(orderedProgrammingLanguages.First().Name == "F#");
-            Assert.IsTrue(orderedProgrammingLanguages.Last().Name == "Java");
+            Assert.True(orderedProgrammingLanguages.First().Name == "F#");
+            Assert.True(orderedProgrammingLanguages.Last().Name == "Java");
         }
 
-        [TestMethod]
+        [Fact]
         public void SortingWithNullValues()
         {
             var programmingLanguages = ProgrammingLanguageRepository.GetProgrammingLanguages().ToList();
@@ -80,13 +80,13 @@ namespace LINQ_Examples
             // The 'null' values will always be sorted to the top of the list
             var orderedByNullOnTop = programmingLanguages.OrderBy(programmingLanguage => programmingLanguage.Name);
 
-            Assert.IsNull(orderedByNullOnTop.First().Name);
+            Assert.Null(orderedByNullOnTop.First().Name);
 
             /* HasValue */
             // It allows to control where the 'null' values are in the sort by verifying that the property has a value
             var orderedByNullOnTheBottom = programmingLanguages.OrderByDescending(programmingLanguage => programmingLanguage.Id.HasValue);
 
-            Assert.IsNull(orderedByNullOnTheBottom.Last().Id);
+            Assert.Null(orderedByNullOnTheBottom.Last().Id);
         }
     }
 }

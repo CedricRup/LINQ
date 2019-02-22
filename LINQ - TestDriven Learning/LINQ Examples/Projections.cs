@@ -1,17 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Models;
+using Xunit;
 
 namespace LINQ_Examples
 {
-    [TestClass]
     public class Projections
     {
         /* Projections */
         // Refers to the operation of transforming an object into a new form
         // The results are projected using the LINQ operators 'Select' or 'SelectMany'
-        [TestMethod]
+        [Fact]
         public void ProjectwithSelect()
         {
             var programmingLanguages = ProgrammingLanguageRepository.GetProgrammingLanguages().ToList();
@@ -21,8 +20,8 @@ namespace LINQ_Examples
             // It projects each item in the sequence into the new Type, in this case, it is a String
             var onlyNames = programmingLanguages.Select(pg => pg.Name).ToList(); 
 
-            Assert.AreEqual(onlyNames.First(),"C#");
-            Assert.AreEqual(onlyNames.Last(), "Ruby");
+            Assert.Equal("C#",onlyNames.First());
+            Assert.Equal("Ruby",onlyNames.Last());
 
             // It is possible to Project into an anonymous Type, it can be created directly in the Lamda expression
             var onlyNamesAndRankings = programmingLanguages.Select(pg => 
@@ -34,13 +33,13 @@ namespace LINQ_Examples
                 pg.Rating
             }).ToList();
 
-            Assert.AreEqual(onlyNamesAndRankings.First().ProgrammingLanguageName, "C#");
-            Assert.AreEqual(onlyNamesAndRankings.First().Rating, 10);
-            Assert.AreEqual(onlyNamesAndRankings.Last().ProgrammingLanguageName, "Ruby");
-            Assert.AreEqual(onlyNamesAndRankings.Last().Rating, 7);
+            Assert.Equal("C#",onlyNamesAndRankings.First().ProgrammingLanguageName);
+            Assert.Equal(10, onlyNamesAndRankings.First().Rating);
+            Assert.Equal("Ruby",onlyNamesAndRankings.Last().ProgrammingLanguageName);
+            Assert.Equal(7,onlyNamesAndRankings.Last().Rating);
         }
 
-        [TestMethod]
+        [Fact]
         public void JoinLists()
         {
             var programmingLanguages = ProgrammingLanguageRepository.GetProgrammingLanguages().ToList();
@@ -61,15 +60,15 @@ namespace LINQ_Examples
                 pl.Name, plt.Type
             }).ToList();
 
-            Assert.AreEqual(programmingLanguagesAndTypes.First().Name, "C#");
-            Assert.AreEqual(programmingLanguagesAndTypes.First().Type, "Object Oriented");
-            Assert.AreEqual(programmingLanguagesAndTypes.Last().Name, "Ruby");
-            Assert.AreEqual(programmingLanguagesAndTypes.First().Type, "Object Oriented");
+            Assert.Equal("C#", programmingLanguagesAndTypes.First().Name);
+            Assert.Equal("Object Oriented", programmingLanguagesAndTypes.First().Type);
+            Assert.Equal("Ruby", programmingLanguagesAndTypes.Last().Name);
+            Assert.Equal("Object Oriented", programmingLanguagesAndTypes.First().Type);
         }
 
         /* Parent/Child Data*/
         // A parent object has a collection of related or child objects
-        [TestMethod]
+        [Fact]
         public void ProjectParentChildDataWithSelect()
         {
             var programmingLanguages = ProgrammingLanguageRepository.GetProgrammingLanguages().ToList();
@@ -79,11 +78,11 @@ namespace LINQ_Examples
             var programmingLanguegesWithIntTypes = programmingLanguages.Select(pg => pg.ObjectTypes?.Where(ot =>  ot.Name == "Int") ?? new List<ObjectType>()).ToList();
 
             // Note: When working with parent/child relationships, the use of Select is not optimal since the child does not have information about the parent, since it is an IEnumerable<T>
-            Assert.AreEqual(programmingLanguegesWithIntTypes.First().First().Name, "Int");
-            Assert.AreEqual(programmingLanguegesWithIntTypes.Last().First().Name, "Int");
+            Assert.Equal("Int", programmingLanguegesWithIntTypes.First().First().Name);
+            Assert.Equal("Int", programmingLanguegesWithIntTypes.Last().First().Name);
         }
 
-        [TestMethod]
+        [Fact]
         public void ProjectParentChildDataWithSelectMany()
         {
             var programmingLanguages = ProgrammingLanguageRepository.GetProgrammingLanguages().ToList();
@@ -100,8 +99,8 @@ namespace LINQ_Examples
             var programmingLanguagesWithIntTypes = programmingLanguages.SelectMany(pg => pg.ObjectTypes?.Where(ot => ot.Name == "Int") ?? new List<ObjectType>(),(pl,ot) => pl).ToList();
 
             /* Find the programming languages with an 'Int' Type */
-            Assert.AreEqual(programmingLanguagesWithIntTypes.First().Name, "C#");
-            Assert.AreEqual(programmingLanguagesWithIntTypes.Last().Name, "Ruby");
+            Assert.Equal("C#", programmingLanguagesWithIntTypes.First().Name);
+            Assert.Equal("Ruby", programmingLanguagesWithIntTypes.Last().Name);
         }
     }
 }

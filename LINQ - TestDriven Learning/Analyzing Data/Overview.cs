@@ -1,8 +1,9 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿
+
+using Xunit;
 
 namespace Analyzing_Data
 {
-    [TestClass]
     public class Overview
     {
         /* Analyzing data using LINQ*/
@@ -21,12 +22,12 @@ namespace Analyzing_Data
         - Mode: Number that occurs the largest number of times
         */
 
-        [TestMethod]
+        [Fact]
         public void Introduction()
         {
             //Can you use Totaling and Grouping together ?
             const bool answer = true;
-            Assert.IsTrue(answer);
+            Assert.True(answer);
         }
     }
 }
