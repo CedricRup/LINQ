@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Models;
 using Xunit;
 
@@ -91,12 +92,10 @@ namespace LINQ_Basics
             // programmingLanguages: defines the data source (it must implement IEnumerable)
             // where: it is used to define the filter
             // select: projects each element of the resulting sequence into a new form
-            var query = from programmingLanguage in programmingLanguages
-                        where programmingLanguage.Name == "C#"
-                        select programmingLanguage;
+            IEnumerable<ProgrammingLanguage> query = null;
 
             // The First() method returns the first element of the sequence
-            var csharp = query.First();
+            var csharp = query.Quelquechose();
 
             /*Note: 
             - LINQ uses deferred execution, this means that the 'query' statement only defines the LINQ statement
@@ -132,7 +131,7 @@ namespace LINQ_Basics
             // => : represents the Lambda operator, it separates the parameters from the expression itself
             // programmingLanguage.Name == "C#": represents the body of the function
             // when the condition is met, the Lamda fuction returns 'true' and 'First()' returns the object
-            var csharp = programmingLanguages.First(programmingLanguage => programmingLanguage.Name == "C#");
+            var csharp = programmingLanguages.Quelquechose();
 
             Assert.NotNull(csharp);
             Assert.True(csharp.Name == "C#");
@@ -144,7 +143,7 @@ namespace LINQ_Basics
             var programmingLanguages = ProgrammingLanguageRepository.GetProgrammingLanguages();
             /* FirstOrDefault */
             // Finds the first entry on the list, but if no entry is found, it returns the default value of the list object, which in most reference Types is 'null'
-            var cplusplus = programmingLanguages.FirstOrDefault(programmingLanguage => programmingLanguage.Name == "C++");
+            var cplusplus = programmingLanguages.Quelquechose();
 
             Assert.Null(cplusplus);
         }
@@ -157,11 +156,7 @@ namespace LINQ_Basics
             // Where is the extension method that is used to find multiple entries
             // It also recieves a Lambda expression as a parameter
             var foundLanguages =
-                programmingLanguages.Where(
-                    // It is a good practice to cache the query result by simply adding a ToList() or ToArray() after LINQ so that the query result is saved(cached)
-                    // Otherwise, you will enumerate the collection every time you execute a LINQ statement on 'programmingLanguages'
-                    programmingLanguage => programmingLanguage.Name == "C#" || programmingLanguage.Name == "Java").ToList();
-
+                programmingLanguages.AutreChose();
             Assert.Equal("C#", foundLanguages.First().Name);
             // Chaining: Extension methods can be chained together
             // Skip() - allows to fluently(via chaining) skip one entry
